@@ -18,22 +18,22 @@ public class Role {
 private Integer id;
 @Enumerated(EnumType.STRING)
 @Column(length = 20)
-private ERole name;
+private ERole role;
 public Role() { }
-public Role(ERole name) {
- this.name = name;
+public Role(ERole role) {
+ this.role = role;
 }
 /* setter und getter */
 public void setId(Integer id) {
     this.id = id;
 }
-public void setName(ERole name) {
-    this.name = name;
+public void setRole(ERole role) {
+    this.role = role;
 }
 public Integer getId() {
     return id;
 }
-public ERole getName() {
-    return name;
+public ERole getRole() {
+    return role;
 }
 }

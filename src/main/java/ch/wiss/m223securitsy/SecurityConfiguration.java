@@ -30,7 +30,7 @@ public class SecurityConfiguration {
             .roles("USER", "ADMIN")
             .build();
         return new InMemoryUserDetailsManager(user, admin);
-    }
+    } 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
