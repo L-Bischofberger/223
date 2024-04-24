@@ -1,37 +1,21 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom/client'
-import Public from './components/Public'
-import {
-    createBrowserRouter, RouterProvider
-} from 'react-router-dom'
-import App from './components/App'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Public from './components/Public';
+import App from './components/App';
 
+const router = (
+  <Router>
+    <Routes>
+      <Route path="/" element={<App />} />
+      <Route path="/public" element={<Public />} />
+      {/* Weitere Routen hier */}
+    </Routes>
+  </Router>
+);
 
-const router = createBrowserRouter([
-  {
-    path:"/",
-    value:"Home"
-
-  },
-  {
-    path:"/public",
-    value:"Public"
-
-  },
-  {
-    path:"/private",
-    value:"Private"
-
-  },
-  {
-    path:"/login",
-    value:"Login"
-
-  }
-])
-
-ReactDOM.createRoot(root).render(
-    <React.StrictMode>
-      <RouterProvider router={router}/>
-    </React.StrictMode>
-)
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    {router}
+  </React.StrictMode>
+);
