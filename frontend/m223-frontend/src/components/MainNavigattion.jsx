@@ -1,29 +1,26 @@
-import {link } from "react-router-dom"
-import "../styles/MainNavigation"
+import React from "react";
+import { Link } from "react-router-dom"; // Importiere Link statt link
+import "../MainNavigation.css";
 
-
-const MainNavigation =() => {
-
+const MainNavigation = () => {
     return (
-        <>
-            <nav id="main-nav">
-                <ul>
-                    <li>
-                            <link to="/">Home</link>
-                    </li>
-                    <li>
-                            <link to="/public">Public</link>
-                    </li>
-                    <li>
-                            <link to="/private">Private</link>
-                    </li>
-                    <li>
-                            <link to="/login">Login</link>
-                    </li>
-                </ul>
-            </nav>
-        </>)
-    
+        <nav id="main-nav">
+            <ul>
+                <li>
+                    <Link to="/">Home</Link>
+                </li>
+                <li>
+                    <Link to="/public">Public</Link>
+                </li>
+                <li>
+                    <Link to="/private">Private</Link>
+                </li>
+                <li>
+                    <Link to="/login">Login</Link>
+                </li>
+            </ul>
+        </nav>
+    );
 }
 
 export default MainNavigation;

@@ -1,9 +1,9 @@
-import MainNavigation  from "./MainNavigattion";
+import MainNavigattion  from "./MainNavigattion";
 
 const Home = () => {
 
     return <>
-        <MainNavigation/>
+        <MainNavigattion/>
         <div id="content">
             <h1>Home</h1>
         </div>

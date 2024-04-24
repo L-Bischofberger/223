@@ -1,5 +1,5 @@
 import axios from "axios";
-import MainNavigation from "./MainNavigattion";
+import MainNavigattion from "./MainNavigattion";
 import React, { useState, useEffect }
     from "react";
 import MainNavigation from "./MainNavigattion";
