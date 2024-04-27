@@ -1,4 +1,5 @@
-// ProtectedRoute.jsx
+/*
+auskomentiert vür test fon calender
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
@@ -9,10 +10,10 @@ const ProtectedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
       isLoggedIn ? (
         <Component {...props} />
       ) : (
-        <Redirect to="/login" />
+        <Redirect to={{ pathname: "/login", state: { from: props.location } }} />
       )
     }
   />
 );
 
-export default ProtectedRoute;
+export default ProtectedRoute;*/

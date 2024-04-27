@@ -1,4 +1,29 @@
 import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Public from './components/Public';
+import App from './components/App';
+
+const router = (
+  <Router>
+    <Routes>
+      <Route path="/" element={<App />} />
+      <Route path="/public" element={<Public />} />
+      {/* Weitere Routen hier */}
+    </Routes>
+  </Router>
+);
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    {router}
+  </React.StrictMode>
+);
+
+
+/*
+//27.04.2024  testen für login
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Public from './components/Public';
@@ -22,7 +47,7 @@ const router = (
         element={<Public />}
         isLoggedIn={isLoggedIn}
       />
-      {/* Weitere geschützte Routen hier */}
+      {/* Weitere geschützte Routen hier *//*}
     </Routes>
   </Router>
 );
@@ -32,7 +57,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     {router}
   </React.StrictMode>
 );
-export default router; // Füge die Exportanweisung hinzu, falls benötigt
+export default router; // Füge die Exportanweisung hinzu, falls benötigt*/
 // Main.jsx
 /* 12:46 26.04.2024
 import React from 'react';

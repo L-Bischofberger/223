@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+/*import React, { useState } from 'react';
 import Login from './login.jsx';
 import Register from './register.jsx';
 
@@ -28,9 +28,9 @@ function App() {
   );
 }
 
-export default App;
+export default App;*/
 // App.jsx   für kalender
-/*import React from 'react';
+import React from 'react';
 import { ScheduleComponent, Inject, Day, Week, WorkWeek, Month, Agenda } from '@syncfusion/ej2-react-schedule';
 import { withRouter } from 'react-router-dom'; // Importiere withRouter aus react-router-dom
 import '../App.css';
