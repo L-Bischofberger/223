@@ -1,5 +1,27 @@
 // src/auth.service.js
-import axios from "axios";
+import axios from 'axios';
+// Beispiel für die Login-Funktion in auth.service.js
+const login = (username, password) => {
+  return axios.post("http://localhost:8080/api/auth/signin", { username, password })
+    .then(response => {
+      if (response.data.accessToken) {
+        localStorage.setItem("jwt_token", response.data.accessToken);
+      }
+      return response.data;
+    });
+};
+
+
+export default {
+  login,
+};
+
+
+
+
+
+// src/auth.service.js
+/*import axios from "axios";
 
 const API_URL = "http://localhost:8080/api/auth/";
 
@@ -37,4 +59,4 @@ const AuthService = {
   getCurrentUser,
 };
 
-export default AuthService;
+export default AuthService;*/

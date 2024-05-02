@@ -3,7 +3,6 @@ package ch.wiss.m223securitsy.Daten;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -19,7 +18,7 @@ public class DataBaseLoader implements CommandLineRunner {
  private final PasswordEncoder passwordEncoder;
  private final UserRepository userRepository;
  private final RoleRepository roleRepository;
- @Autowired
+
  public DataBaseLoader(PasswordEncoder passwordEncoder, RoleRepository roleRepository, UserRepository userRepository) {
  this.passwordEncoder = passwordEncoder;
  this.roleRepository = roleRepository;
