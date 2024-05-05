@@ -2,10 +2,8 @@ package ch.wiss.m223securitsy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import ch.wiss.m223securitsy.Repository.EventRepository;
 import ch.wiss.m223securitsy.security.Event;
-
 import java.util.List;
 
 @RestController
@@ -25,6 +23,11 @@ public class EventController {
     public Event createEvent(@RequestBody Event event) {
         return eventRepository.save(event);
     }
+    // Löschen eines Events
+    @DeleteMapping("/{id}")
+    public void deleteEvent(@PathVariable Long id) {
+        eventRepository.deleteById(id);
+    }
 
     // Update eines bestehenden Events
     @PutMapping("/{id}")
@@ -32,8 +35,8 @@ public class EventController {
         return eventRepository.findById(id)
                 .map(event -> {
                     event.setTitle(updatedEvent.getTitle());
-                    event.setStart(updatedEvent.getStart());
-                    event.setEnd(updatedEvent.getEnd());
+                    event.setStartTime(updatedEvent.getStartTime());
+                    event.setEndTime(updatedEvent.getEndTime());
                     return eventRepository.save(event);
                 })
                 .orElseGet(() -> {
@@ -42,10 +45,4 @@ public class EventController {
                 });
     }
 
-    // Löschen eines Events
-    @DeleteMapping("/{id}")
-    public void deleteEvent(@PathVariable Long id) {
-        eventRepository.deleteById(id);
-    }
 }
-

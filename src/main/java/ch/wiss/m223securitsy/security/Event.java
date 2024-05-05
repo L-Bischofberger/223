@@ -1,11 +1,8 @@
 package ch.wiss.m223securitsy.security;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "events")
@@ -15,49 +12,24 @@ public class Event {
     private Long id;
 
     private String title;
-    private LocalDateTime start;
-    private LocalDateTime end;
 
-    // Standardkonstruktor
-    public Event() {}
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date startTime;
 
-    // Konstruktor mit Parametern
-    public Event(String title, LocalDateTime start, LocalDateTime end) {
-        this.title = title;
-        this.start = start;
-        this.end = end;
-    }
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date endTime;
+
+    private boolean isAllDay;
 
     // Getter und Setter
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public LocalDateTime getStart() {
-        return start;
-    }
-
-    public void setStart(LocalDateTime start) {
-        this.start = start;
-    }
-
-    public LocalDateTime getEnd() {
-        return end;
-    }
-
-    public void setEnd(LocalDateTime end) {
-        this.end = end;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+    public Date getStartTime() { return startTime; }
+    public void setStartTime(Date startTime) { this.startTime = startTime; }
+    public Date getEndTime() { return endTime; }
+    public void setEndTime(Date endTime) { this.endTime = endTime; }
+    public boolean isAllDay() { return isAllDay; }
+    public void setAllDay(boolean allDay) { isAllDay = allDay; }
 }

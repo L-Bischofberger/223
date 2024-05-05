@@ -1,54 +1,114 @@
 // src/App.jsx
-// src/App.jsx
-import React, { useEffect, useState, useContext } from 'react';
-import { ScheduleComponent, Day, Week, WorkWeek, Month, Agenda, Inject } from '@syncfusion/ej2-react-schedule';
-import axios from 'axios';
-import { AuthContext, AuthProvider } from './AuthProvider.jsx';
-
-
-const API_URL = "http://localhost:8080/api/events";
+import React, { useEffect, useState } from 'react';
+import { fetchEvents, addEvent, updateEvent, deleteEvent } from './api';
+import '@syncfusion/ej2-base/styles/material.css';
+import { ScheduleComponent, Day, Week, WorkWeek, Month, Agenda, Inject, ViewDirective, ViewsDirective } from '@syncfusion/ej2-react-schedule';
 
 const App = () => {
-    const [events, setEvents] = useState([]);
-    const { isAuthenticated } = useContext(AuthContext);
+  const [events, setEvents] = useState([]);
 
-    useEffect(() => {
-        if (isAuthenticated) {
-            fetchEvents();
-        }
-    }, [isAuthenticated]);
+  useEffect(() => {
+    fetchEvents().then(response => {
+      setEvents(response.data.map(event => ({
+        Id: event.id,
+        Subject: event.title,
+        StartTime: new Date(event.startTime),
+        EndTime: new Date(event.endTime),
+        IsAllDay: event.isAllDay
+      })));
+    }).catch(error => console.error('Error fetching events:', error));
+  }, []);
 
-    const fetchEvents = () => {
-        const token = localStorage.getItem('jwt_token');
-        axios.get(API_URL, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        .then(response => {
-            const mappedEvents = response.data.map(event => ({
-                Id: event.id,
-                Subject: event.title,
-                StartTime: new Date(event.start),
-                EndTime: new Date(event.end),
-                IsAllDay: false
-            }));
-            setEvents(mappedEvents);
-        })
-        .catch(error => {
-            console.error('Fehler beim Laden der Events:', error);
-        });
-    };
-
-    if (!isAuthenticated) {
-        return <div>Bitte einloggen, um den Kalender zu sehen.</div>;
+  const onEventAdded = (e) => {
+    // Logge die gesamten Event-Daten zur Überprüfung
+    console.log('Event data:', e.data);
+  
+    // Extrahiere das Event-Objekt aus dem Array, wenn es vorhanden ist
+    const event = e.data[0];
+  
+    if (!event) {
+      console.error('Event data is missing or the structure is incorrect');
+      return;
     }
+  
+    // Überprüfe weiterhin, ob alle notwendigen Daten vorhanden sind
+    if (!event.Subject || !event.StartTime || !event.EndTime) {
+      console.error('Event details are missing');
+      return;
+    }
+  
+    const eventData = {
+      title: event.Subject,
+      startTime: event.StartTime.toISOString(),
+      endTime: event.EndTime.toISOString(),
+      isAllDay: event.IsAllDay
+    };
+  
+    addEvent(eventData)
+      .then(response => {
+        setEvents([...events, {
+          Id: response.data.id,
+          ...eventData
+        }]);
+      })
+      .catch(error => console.error('Error creating event:', error));
+  };
+  
 
-    return (
-        <ScheduleComponent height='650px' eventSettings={{ dataSource: events }}>
-            <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
-        </ScheduleComponent>
-    );
+  const onEventChanged = (e) => {
+    const { event } = e.data;
+    const eventData = {
+      title: event.Subject,
+      startTime: event.StartTime.toISOString(),
+      endTime: event.EndTime.toISOString(),
+      isAllDay: event.IsAllDay
+    };
+    updateEvent(event.Id, eventData).then(response => {
+      setEvents(events.map(evt => evt.Id === event.Id ? { ...evt, ...eventData } : evt));
+    }).catch(error => console.error('Error updating event:', error));
+  };
+
+  const onEventRemoved = (e) => {
+    // Zugriff auf das Event aus dem Datenpaket
+    const event = e.data[0]; // Annahme, dass das Event-Objekt im ersten Element des Arrays liegt
+  
+    // Prüfe, ob das Event-Objekt und die Id vorhanden sind
+    if (!event || !event.Id) {
+      console.error('Event data is missing or incorrect:', e.data);
+      return;
+    }
+  
+    deleteEvent(event.Id).then(() => {
+      // Entferne das Event aus dem State
+      setEvents(events.filter(evt => evt.Id !== event.Id));
+    }).catch(error => console.error('Error deleting event:', error));
+  };
+  
+
+  return (
+    <ScheduleComponent 
+      height="550px" 
+      eventSettings={{ dataSource: events }} 
+      actionBegin={(e) => {
+        if (e.requestType === "eventCreate") {
+          onEventAdded(e);
+        } else if (e.requestType === "eventChange") {
+          onEventChanged(e);
+        } else if (e.requestType === "eventRemove") {
+          onEventRemoved(e);
+        }
+      }}
+    >
+      <ViewsDirective>
+        <ViewDirective option='Day' />
+        <ViewDirective option='Week' />
+        <ViewDirective option='WorkWeek' />
+        <ViewDirective option='Month' />
+        <ViewDirective option='Agenda' />
+      </ViewsDirective>
+      <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
+    </ScheduleComponent>
+  );
 };
 
 export default App;
