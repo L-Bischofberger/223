@@ -56,7 +56,7 @@ const App = () => {
   
 
   const onEventChanged = (e) => {
-    const { event } = e.data;
+    const event = e.data;
     const eventData = {
       title: event.Subject,
       startTime: event.StartTime.toISOString(),

@@ -1,5 +1,6 @@
 package ch.wiss.m223securitsy.security;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class WebSecurityConfig {
  @Autowired private UserDetailsServiceImpl userDetailsService;
  @Autowired private AuthenticationEntryPoint unauthorizedHandler;
  private final static String[] EVERYONE = { "/api/auth/**", "/category", "/quiz" };
- private final static String[] SECURE = { "/question" };
+ private final static String[] SECURE = { "/question","api/events/**" };
  private final static String[] ROLES = { "MODERATOR", "ADMIN"};
  @Bean
  public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -68,7 +69,18 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
  UsernamePasswordAuthenticationFilter.class); 
  return http.build();
  }
- 
+ @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // Allow your frontend origin
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("*")); // Allow all headers
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
  @Bean
  public WebMvcConfigurer corsConfigurer() {
  return new WebMvcConfigurer() {
