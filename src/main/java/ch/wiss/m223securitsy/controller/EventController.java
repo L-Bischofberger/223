@@ -1,6 +1,7 @@
 package ch.wiss.m223securitsy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ch.wiss.m223securitsy.Repository.EventRepository;
 import ch.wiss.m223securitsy.security.Event;
@@ -43,6 +44,9 @@ public class EventController {
                     updatedEvent.setId(id);
                     return eventRepository.save(updatedEvent);
                 });
-    }
+    };
+
+
+
 
 }
