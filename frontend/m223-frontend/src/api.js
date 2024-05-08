@@ -17,14 +17,21 @@ axios.interceptors.request.use(
   }
 );
 
-// API Funktionen
 export const fetchEvents = () => {
   return axios.get(`${API_URL}/events`);
 };
 
 export const addEvent = (eventData) => {
-  return axios.post(`${API_URL}/events`, eventData);
+  return axios.post(`${API_URL}/events`, {
+    title: eventData.title,
+    startTime: eventData.startTime,
+    endTime: eventData.endTime,
+    isAllDay: eventData.isAllDay,
+    public: eventData.public  // Auch hier muss 'public' richtig benannt sein
+  });
 };
+
+
 
 export const updateEvent = (id, eventData) => {
   return axios.put(`${API_URL}/events/${id}`, eventData);
@@ -34,10 +41,15 @@ export const deleteEvent = (id) => {
   return axios.delete(`${API_URL}/events/${id}`);
 };
 
-// Exportiert die Funktionen standardmäßig
+export const togglePublic = (id) => {
+  return axios.put(`${API_URL}/events/${id}/togglePublic`);
+};
+
 export default {
   fetchEvents,
   addEvent,
   updateEvent,
-  deleteEvent
+  deleteEvent,
+  togglePublic
 };
+
