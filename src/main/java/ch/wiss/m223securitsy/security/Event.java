@@ -22,11 +22,14 @@ public class Event {
     @Column(name = "is_public")
     private boolean isPublic;
     
+    private String description;
+
+    private String location;
 
     @Column(nullable = false)
-    private String creator; // Benutzername des Erstellers des Events
+    private String creator;
 
-    // Getter und Setter
+    
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getTitle() { return title; }
@@ -41,4 +44,8 @@ public class Event {
     public void setPublic(boolean aPublic) { isPublic = aPublic; }
     public String getCreator() { return creator; }
     public void setCreator(String creator) { this.creator = creator; }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
 }

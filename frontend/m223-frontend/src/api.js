@@ -1,4 +1,3 @@
-// src/api.js
 import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/api';
@@ -27,11 +26,11 @@ export const addEvent = (eventData) => {
     startTime: eventData.startTime,
     endTime: eventData.endTime,
     isAllDay: eventData.isAllDay,
-    public: eventData.public  // Auch hier muss 'public' richtig benannt sein
+    public: eventData.public,  // Achte auf korrekte Benennung
+    description: eventData.description,
+    location: eventData.location
   });
 };
-
-
 
 export const updateEvent = (id, eventData) => {
   return axios.put(`${API_URL}/events/${id}`, eventData);
@@ -52,4 +51,3 @@ export default {
   deleteEvent,
   togglePublic
 };
-

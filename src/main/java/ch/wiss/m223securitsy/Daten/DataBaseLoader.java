@@ -43,8 +43,8 @@ public class DataBaseLoader implements CommandLineRunner {
             this.userRepository.save(janeDoe);
 
 
-            User johnDoe = new User("12345678", "12345678.doe@email.com", passwordEncoder.encode("12345678"));
-            johnDoe.setRoles(new HashSet<>(Arrays.asList(roleRepository.findByRole(ERole.ROLE_USER).get())));
+            User johnDoe = new User("654321", "654321.doe@email.com", passwordEncoder.encode("654321"));
+            johnDoe.setRoles(new HashSet<>(Arrays.asList(roleRepository.findByRole(ERole.ROLE_ADMIN).get())));
             this.userRepository.save(johnDoe);
 
 
