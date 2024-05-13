@@ -38,7 +38,7 @@ public class EventController {
     public ResponseEntity<?> updateEvent(@PathVariable Long id, @RequestBody Event updatedEvent, Authentication authentication) {
         return eventRepository.findById(id)
                 .map(event -> {
-                    if (!event.getCreator().equals(authentication.getName())) {
+                    if (!event.getCreator().equals(authentication.getName()) && !isAdmin(authentication)) {
                         event.setDescription(updatedEvent.getDescription());
                         eventRepository.save(event);
                         return ResponseEntity.ok(event);
@@ -60,7 +60,7 @@ public class EventController {
     public ResponseEntity<?> deleteEvent(@PathVariable Long id, Authentication authentication) {
         return eventRepository.findById(id)
                 .map(event -> {
-                    if (event.getCreator().equals(authentication.getName())) {
+                    if (event.getCreator().equals(authentication.getName()) || isAdmin(authentication)) {
                         eventRepository.deleteById(id);
                         return ResponseEntity.ok().build();
                     }
@@ -73,7 +73,7 @@ public class EventController {
     public ResponseEntity<?> toggleEventPublic(@PathVariable Long id, Authentication authentication) {
         return eventRepository.findById(id)
             .map(event -> {
-                if (event.getCreator().equals(authentication.getName())) {
+                if (event.getCreator().equals(authentication.getName()) || isAdmin(authentication)) {
                     event.setPublic(!event.isPublic());
                     eventRepository.save(event);
                     return ResponseEntity.ok(event);
@@ -81,5 +81,10 @@ public class EventController {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Not authorized");
             })
             .orElse(ResponseEntity.notFound().build());
+    }
+
+    private boolean isAdmin(Authentication authentication) {
+        return authentication.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
     }
 }
