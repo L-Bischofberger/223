@@ -2,7 +2,7 @@ package ch.wiss.m223securitsy.security;
 
 import java.util.List;
 
-
+//Antwortnutzlast, die das JWT-Token und Benutzerinformationen enthält.
 public class JwtResponse{
  private String token;
  private String type = "Bearer";

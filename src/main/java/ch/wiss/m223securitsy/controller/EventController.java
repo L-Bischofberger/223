@@ -19,6 +19,7 @@ public class EventController {
     private EventRepository eventRepository;
 
     @GetMapping
+    // Ruft alle Einträge für den aktuellen Benutzer ab
     public List<Event> getAllEvents(Authentication authentication) {
         String currentUsername = authentication.getName();
         return eventRepository.findAll().stream()
@@ -27,6 +28,7 @@ public class EventController {
     }
 
     @PostMapping
+    // Erstellt einen neuen Eintrag
     public ResponseEntity<Event> createEvent(@RequestBody Event event, Authentication authentication) {
         String currentUsername = authentication.getName();
         event.setCreator(currentUsername);
@@ -35,6 +37,8 @@ public class EventController {
     }
 
     @PutMapping("/{id}")
+    // Aktualisiert eine vorhandenen Eintrag
+    //Wen der Benuzer nich ein andmin ist und auch nicht der erteller des eintrages kann er nur die Beschreibung ändern.
     public ResponseEntity<?> updateEvent(@PathVariable Long id, @RequestBody Event updatedEvent, Authentication authentication) {
         return eventRepository.findById(id)
                 .map(event -> {
@@ -57,6 +61,7 @@ public class EventController {
     }
 
     @DeleteMapping("/{id}")
+    // Löscht einen Eintrag wen der benuzer ihn erstelt hat oder es ein admin ist.
     public ResponseEntity<?> deleteEvent(@PathVariable Long id, Authentication authentication) {
         return eventRepository.findById(id)
                 .map(event -> {
@@ -70,6 +75,7 @@ public class EventController {
     }
 
     @PutMapping("/{id}/togglePublic")
+    // Schaltet den öffentlichen Status eines Eintrages um
     public ResponseEntity<?> toggleEventPublic(@PathVariable Long id, Authentication authentication) {
         return eventRepository.findById(id)
             .map(event -> {
@@ -84,6 +90,7 @@ public class EventController {
     }
 
     private boolean isAdmin(Authentication authentication) {
+        // Prüft, ob der aktuelle Benutzer die Admin-Rolle hat
         return authentication.getAuthorities().stream()
                 .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
     }

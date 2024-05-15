@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import ch.wiss.m223securitsy.Repository.UserRepository;
 import jakarta.transaction.Transactional;
-
+//Lädt benutzerspezifische Daten.
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{
  @Autowired

@@ -2,7 +2,7 @@ package ch.wiss.m223securitsy.security;
 
 import jakarta.persistence.*;
 import java.util.Date;
-
+//Entität eines eintrages
 @Entity
 @Table(name = "events")
 public class Event {

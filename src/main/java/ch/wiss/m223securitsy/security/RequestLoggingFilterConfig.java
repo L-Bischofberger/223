@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 @Configuration
 public class RequestLoggingFilterConfig {
+    //Konfiguriert das Logging für eingehende Anfragen
  @Bean
  public CommonsRequestLoggingFilter logFilter() {
  CommonsRequestLoggingFilter filter = new CommonsRequestLoggingFilter();

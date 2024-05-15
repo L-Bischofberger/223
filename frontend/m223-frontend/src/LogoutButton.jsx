@@ -6,10 +6,10 @@ import { useNavigate } from 'react-router-dom';
 const LogoutButton = () => {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
-
+// Funktion zur Abmeldung und Weiterleitung zur Login-Seite
   const handleLogout = () => {
     logout();
-    navigate('/login');  // Leitet den Benutzer zur Login-Seite um
+    navigate('/login');
   };
 
   return (

@@ -1,20 +1,16 @@
 package ch.wiss.m223securitsy.security;
 
 import java.util.Arrays;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -32,8 +28,6 @@ public class WebSecurityConfig {
  @Autowired private UserDetailsServiceImpl userDetailsService;
  @Autowired private AuthenticationEntryPoint unauthorizedHandler;
  private final static String[] EVERYONE = { "/api/auth/**", "/category", "/quiz" };
- private final static String[] SECURE = { "/question","api/events/**" };
- private final static String[] ROLES = { "MODERATOR", "ADMIN"};
  @Bean
  public AuthTokenFilter authenticationJwtTokenFilter() {
  return new AuthTokenFilter();
@@ -45,7 +39,7 @@ public class WebSecurityConfig {
  authProvider.setPasswordEncoder(passwordEncoder()); 
  return authProvider;
  }
- 
+ //Erstellt und konfiguriert einen BCryptPasswordEncoder
  @Bean
  public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
  return authConfig.getAuthenticationManager();
@@ -56,6 +50,7 @@ public PasswordEncoder passwordEncoder() {
 }
  
 @Bean
+//Konfiguriert die Sicherheitsfilterkette
 public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
  http.csrf(csrf -> csrf.disable()).cors(Customizer.withDefaults())
  .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
@@ -70,11 +65,12 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
  return http.build();
  }
  @Bean
+ //Konfiguriert die CORS-Einstellungen
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // Allow your frontend origin
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("*")); // Allow all headers
+        configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -82,6 +78,7 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return source;
     }
  @Bean
+ //Konfiguriert CORS-Mappings für das Framework
  public WebMvcConfigurer corsConfigurer() {
  return new WebMvcConfigurer() {
  @Override

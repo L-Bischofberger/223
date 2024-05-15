@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import { AuthContext } from './AuthProvider';
 import { useNavigate } from 'react-router-dom';
-
+//Heder mit Abmeldefunktion
 const Header = () => {
   const { isAuthenticated, user, setAuthStatus, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const Header = () => {
     <header style={{ padding: '20px', textAlign: 'center' }}>
       {isAuthenticated ? (
         <>
-          <p>Welcome, {user ? user.username : 'Guest'}!</p>
+          <p>Welcome, Guest</p>
           <button onClick={handleLogout}>Logout</button>
         </>
       ) : (
@@ -30,23 +30,3 @@ const Header = () => {
 };
 
 export default Header;
-
-
-/*import React, { useContext } from 'react';
-import { AuthContext } from './AuthProvider';
-
-const Header = () => {
-    const { isAuthenticated, user } = useContext(AuthContext);
-
-    return (
-        <div style={{ backgroundColor: "#f0f0f0", padding: "20px 20px" }}>
-            {isAuthenticated ? (
-                <p>Eingeloggt als: {user?.username}</p>
-            ) : (
-                <p>Nicht eingeloggt</p>
-            )}
-        </div>
-    );
-};
-
-export default Header;*/

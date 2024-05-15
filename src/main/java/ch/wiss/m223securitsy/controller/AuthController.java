@@ -41,6 +41,7 @@ public class AuthController {
  @Autowired PasswordEncoder encoder;
  @Autowired JwtUtils jwtUtils;
  @PostMapping("/signin")
+ // Authentifizieren Sie den Benutzer und generieren Sie das JWT-Token
  public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
      Authentication authentication = authenticationManager.authenticate(
          new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
@@ -58,6 +59,7 @@ public class AuthController {
  
 
 @PostMapping("/signup")
+// Registrieren Sie einen neuen Benutzer und weisen Sie Rollen zu
 public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 if (userRepository.existsByUsername(signUpRequest.getUsername())) {
 return ResponseEntity
@@ -69,7 +71,6 @@ return ResponseEntity
 .badRequest()
 .body(new MessageResponse("Error: Email is already in use!"));
 }
-// Create new user's account
 User user = new User(signUpRequest.getUsername(),
 signUpRequest.getEmail(), encoder.encode(signUpRequest.getPassword()));
 Set<String> strRoles = signUpRequest.getRole();
@@ -85,11 +86,6 @@ case "admin":
 Role adminRole = roleRepository.findByRole(ERole.ROLE_ADMIN)
 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 roles.add(adminRole);
-break;
-case "mod":
-Role modRole = roleRepository.findByRole(ERole.ROLE_MODERATION)
-.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-roles.add(modRole);
 break;
 default:
 Role userRole = roleRepository.findByRole(ERole.ROLE_USER)
