@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { fetchEvents, addEvent, updateEvent, deleteEvent, togglePublic } from './api';
 import '@syncfusion/ej2-base/styles/material.css';
+// Importieren von Komponenten für den Kalender
 import { ScheduleComponent, Day, Week, WorkWeek, Month, Agenda, Inject, ViewDirective, ViewsDirective } from '@syncfusion/ej2-react-schedule';
 
 const App = () => {
   const [isPublic, setIsPublic] = useState(false);
   const [events, setEvents] = useState([]);
-
+// Laden der Events beim ersten Rendern der Komponente
   useEffect(() => {
     fetchEvents().then(response => {
+      // Mapping der API-Daten zu dem Format der ScheduleComponenten
       setEvents(response.data.map(event => ({
         Id: event.id,
         Subject: event.title,
@@ -21,11 +23,11 @@ const App = () => {
       })));
     }).catch(error => console.error('Error fetching events:', error));
   }, []);
-
+// Umschalten des öffentlichen Status
   const togglePublicState = () => {
     setIsPublic(!isPublic);  
   };
-
+ // Hinzufügen eines neuen Events
   const onEventAdded = (e) => {
     const event = e.data[0]; 
     if (!event) {
@@ -42,7 +44,7 @@ const App = () => {
       description: event.Description,
       location: event.Location
     };
-  
+   // Neues Event zur Liste der Events hinzufügen
     addEvent(eventData)
       .then(response => {
         setEvents([...events, {
@@ -52,7 +54,7 @@ const App = () => {
       })
       .catch(error => console.error('Error creating event:', error));
   };
-
+  //Aktualisieren eines bestehenden Events
   const onEventChanged = (e) => {
     const event = e.data;
     const eventData = {
@@ -63,11 +65,13 @@ const App = () => {
       description: event.Description,
       location: event.Location
     };
+
+    // Aktualisiertes Event in der Liste
     updateEvent(event.Id, eventData).then(response => {
       setEvents(events.map(evt => evt.Id === event.Id ? { ...evt, ...eventData } : evt));
     }).catch(error => console.error('Error updating event:', error));
   };
-
+  // Löschen eines Events
   const onEventRemoved = (e) => {
     const event = e.data[0]; 
     if (!event || !event.Id) {

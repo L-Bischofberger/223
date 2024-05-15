@@ -1,5 +1,5 @@
 package ch.wiss.m223securitsy.Request;
-
+//Repräsentiert die Anfragenutzlast für das Einloggen.
 public class LoginRequest {
     private String username;
     private String password;

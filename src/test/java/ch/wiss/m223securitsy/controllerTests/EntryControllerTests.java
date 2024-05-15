@@ -40,7 +40,7 @@ public class EntryControllerTests {
 
         String responseBody = result.getResponse().getContentAsString();
         String token = JsonPath.parse(responseBody).read("$.accessToken");
-
+//eintrag erstellen
         String newEntryJson = "{"
                 + "\"title\": \"test1\","
                 + "\"startTime\": \"2024-05-10T10:30:00.000+02:00\","

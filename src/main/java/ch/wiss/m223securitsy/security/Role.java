@@ -9,7 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
+//Entität, die eine Benutzerrolle repräsentiert
 @Entity
 @Table(name = "role")
 public class Role {
@@ -23,7 +23,6 @@ public Role() { }
 public Role(ERole role) {
  this.role = role;
 }
-/* setter und getter */
 public void setId(Integer id) {
     this.id = id;
 }

@@ -15,31 +15,31 @@ axios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
+//Ruft alle Events vom Server ab.
 export const fetchEvents = () => {
   return axios.get(`${API_URL}/events`);
 };
-
+//Fügt ein neues Event hinzu
 export const addEvent = (eventData) => {
   return axios.post(`${API_URL}/events`, {
     title: eventData.title,
     startTime: eventData.startTime,
     endTime: eventData.endTime,
     isAllDay: eventData.isAllDay,
-    public: eventData.public,  // Achte auf korrekte Benennung
+    public: eventData.public, 
     description: eventData.description,
     location: eventData.location
   });
 };
-
+//Aktualisiert ein bestehendes Event
 export const updateEvent = (id, eventData) => {
   return axios.put(`${API_URL}/events/${id}`, eventData);
 };
-
+//Löscht ein Event
 export const deleteEvent = (id) => {
   return axios.delete(`${API_URL}/events/${id}`);
 };
-
+//Schaltet den öffentlichen Status eines um
 export const togglePublic = (id) => {
   return axios.put(`${API_URL}/events/${id}/togglePublic`);
 };

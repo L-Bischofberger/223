@@ -14,9 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {
  private static final Logger logger = LoggerFactory.getLogger(AuthEntryPointJwt.class);
- /**
- * commence heisst "anfangen"
- */
+//Verarbeitet unautorisierte Zugriffsversuche.
  @Override
  public void commence(HttpServletRequest request,
  HttpServletResponse response, AuthenticationException authException)

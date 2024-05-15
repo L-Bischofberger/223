@@ -6,7 +6,7 @@ export const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setAuthStatus] = useState(false);
   const [user, setUser] = useState(null);
-
+//Laden der Authentifizierungsdaten beim ersten Rendern der Komponente
   useEffect(() => {
     const storedToken = localStorage.getItem('jwt_token');
     const storedUser = localStorage.getItem('user');
@@ -28,44 +28,12 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
+    // Bereitstellung des AuthContext
     <AuthContext.Provider value={{ isAuthenticated, user, setAuthStatus, setUser }}>
       {children}
     </AuthContext.Provider>
   );
 };
-
-
-
-/*
-//login hat funktiooniert mit benuzer anzeigen
-import React, { createContext, useState, useEffect } from 'react';
-
-export const AuthContext = createContext({
-  isAuthenticated: false,
-  user: null,
-  setAuthStatus: () => {},
-  setUser: () => {}
-});
-
-export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setAuthStatus] = useState(false);
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem('jwt_token');
-    const userData = localStorage.getItem('user');
-    if (token && userData) {
-      setAuthStatus(true);
-      setUser(JSON.parse(userData));
-    }
-  }, []);
-
-  return (
-    <AuthContext.Provider value={{ isAuthenticated, user, setAuthStatus, setUser }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};*/
 
 
 

@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.persistence.GeneratedValue;
 @Entity
+//Entität, die einen Benutzer repräsentiert.
 @Table(name="User")
 public class User {
  @Id
